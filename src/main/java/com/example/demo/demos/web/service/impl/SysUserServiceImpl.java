@@ -1,4 +1,4 @@
-package com.example.demo.demos.web.service.Impl;
+package com.example.demo.demos.web.service.impl;
 
 import com.example.demo.demos.web.entity.SysUser;
 import com.example.demo.demos.web.mapper.SysUserMapper;

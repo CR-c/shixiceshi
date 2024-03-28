@@ -8,6 +8,8 @@ import com.example.demo.demos.web.entity.Evaluate;
 import com.example.demo.demos.web.entity.Works;
 import com.example.demo.demos.web.service.EvaluateService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -32,6 +34,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
+@Api(value = "评价服务接口")
 @RequestMapping("evaluate")
 public class EvaluateController {
     /**
@@ -41,6 +44,7 @@ public class EvaluateController {
     private EvaluateService evaluateService;
 
     //新增
+    @ApiOperation("新增评价")
     @PostMapping("/save")
     public R<String> save(@RequestBody Evaluate evaluate){
 
@@ -49,6 +53,7 @@ public class EvaluateController {
     }
 
     //删除
+    @ApiOperation("删除评价")
     @DeleteMapping("/delete")
     public R<String> delete(@RequestParam("id") Integer id){
 
@@ -57,6 +62,7 @@ public class EvaluateController {
     }
 
     //修改
+    @ApiOperation("修改评价")
     @PutMapping("/update")
     public R<String> update(@RequestBody Evaluate evaluate){
 
@@ -65,6 +71,7 @@ public class EvaluateController {
     }
 
     //查询
+    @ApiOperation("查询评价")
     @GetMapping("/find")
     public R<Evaluate> findById(@RequestParam("id") Integer id){
 
@@ -73,7 +80,7 @@ public class EvaluateController {
     }
 
     //分页查询
-
+    @ApiOperation("分页查询评价")
     @PostMapping("/findPage")
     public R<Page<Evaluate>> findPage(@RequestParam(value = "page") int page, @RequestParam(value = "pageSize") int pageSize,
                                       @RequestBody Evaluate evaluate){
@@ -81,6 +88,8 @@ public class EvaluateController {
         return R.success(paged);
     }
 
+    //导出分页查询的数据
+    @ApiOperation("导出分页查询的数据")
     @GetMapping("/export-data")
     public ResponseEntity<InputStreamResource> exportData(@RequestBody Evaluate evaluate, @RequestParam(value = "page") int page, @RequestParam(value = "pageSize") int pageSize) throws IOException {
         // 假设这是从数据库分页查询得到的数据列表
@@ -100,7 +109,7 @@ public class EvaluateController {
         int rowNum = 1;
         for (Evaluate data : pageData) {
             Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(data.getGroup());
+            row.createCell(0).setCellValue(data.getWorkGroup());
             row.createCell(1).setCellValue(data.getSchool());
             row.createCell(2).setCellValue(data.getWorkName());
             row.createCell(3).setCellValue(data.getEvaluateUser());
@@ -140,7 +149,7 @@ public class EvaluateController {
         queryWrapper.eq(evaluate.getWorkName() != null, Evaluate::getWorkName, evaluate.getWorkName());
         queryWrapper.eq(evaluate.getSchool() != null, Evaluate::getSchool, evaluate.getSchool());
         queryWrapper.eq(evaluate.getWorkUserName() != null, Evaluate::getWorkUserName, evaluate.getWorkUserName());
-        queryWrapper.eq(evaluate.getGroup() != null, Evaluate::getGroup, evaluate.getGroup());
+        queryWrapper.eq(evaluate.getWorkGroup() != null, Evaluate::getWorkGroup, evaluate.getWorkGroup());
         Page<Evaluate> pageInfo = new Page<>(page, pageSize);
         Page<Evaluate> paged = evaluateService.page(pageInfo, queryWrapper);
 

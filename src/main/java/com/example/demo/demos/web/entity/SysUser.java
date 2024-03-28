@@ -1,5 +1,6 @@
 package com.example.demo.demos.web.entity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "用户实体类")
 public class SysUser {
 
     //用户id
@@ -27,7 +29,7 @@ public class SysUser {
     private String userPassword;
 
     //报名组别
-    private String group;
+    private String workGroup;
 
     //学校
     private String school;

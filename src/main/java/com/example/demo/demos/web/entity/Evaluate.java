@@ -2,6 +2,7 @@ package com.example.demo.demos.web.entity;
 
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "评价实体类")
 public class Evaluate {
 
     //评价id
@@ -29,7 +31,7 @@ public class Evaluate {
     private String workUserName;
 
     //组别
-    private String group;
+    private String workGroup;
 
     //教案
     private String teachBook;

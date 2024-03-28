@@ -7,6 +7,9 @@ import com.example.demo.demos.web.entity.SysUser;
 import com.example.demo.demos.web.entity.Works;
 import com.example.demo.demos.web.service.SysUserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +37,7 @@ import java.nio.file.Paths;
 @Slf4j
 @RestController
 @RequestMapping("sysUser")
+@Api(value = "用户服务")
 public class SysUserController {
     /**
      * 服务对象
@@ -43,6 +47,7 @@ public class SysUserController {
 
     private static final String UPLOAD_DIR = "path/static"; // 更改为您希望保存上传文件的目录
 
+    @ApiOperation(value = "新增用户",notes = "新增用户")
     @PostMapping("/save")
     public R<String> save(@RequestBody SysUser sysUser){
         boolean save = sysUserService.save(sysUser);
@@ -53,6 +58,7 @@ public class SysUserController {
     }
 
     //删除SysUser
+    @ApiOperation(value = "删除用户",notes = "删除用户")
     @DeleteMapping("/delete")
     public R<String> delete(@RequestParam Integer id){
         boolean delete = sysUserService.removeById(id);
@@ -63,6 +69,7 @@ public class SysUserController {
     }
 
     //修改
+    @ApiOperation(value = "修改用户",notes = "修改用户")
     @PostMapping("/update")
     public R<String> update(@RequestBody SysUser sysUser){
         boolean update = sysUserService.updateById(sysUser);
@@ -73,6 +80,7 @@ public class SysUserController {
     }
 
     //查询
+    @ApiOperation(value = "查询用户",notes = "查询用户")
     @PostMapping("/getById")
     public R<SysUser> getById(@RequestParam Integer id){
         SysUser sysUser = sysUserService.getById(id);
@@ -81,6 +89,10 @@ public class SysUserController {
         }
         return R.error("查询失败");
     }
+
+    //f分页查询
+    @ApiOperation(value = "分页查询用户",notes = "分页查询用户")
+
     @RequestMapping("/list")
     public R<Page> getOrderList(@RequestBody SysUser sysUser, @RequestParam(value = "page") int page, @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "status") int status) {
         //分页查
@@ -94,6 +106,7 @@ public class SysUserController {
     }
 
     //下载模板
+    @ApiOperation(value = "下载模板",notes = "下载模板")
     @GetMapping("/download-file")
     public ResponseEntity<Resource> downloadFile() {
         // 这里填入你想下载的文件的路径
@@ -117,6 +130,9 @@ public class SysUserController {
         }
     }
 
+    //上传模板
+    @ApiOperation(value = "上传模板",notes = "上传模板")
+    @ApiImplicitParam(name = "file", value = "上传的文件", required = true, dataType = "MultipartFile")
     @PostMapping("/upload-file")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.demos.commons.R;
 import com.example.demo.demos.web.entity.Works;
 import com.example.demo.demos.web.service.WorksService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -30,6 +32,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
+@Api(value = "作品管理")
 @RequestMapping("works")
 public class WorksController {
     /**
@@ -39,6 +42,7 @@ public class WorksController {
     private WorksService worksService;
 
     //新增
+    @ApiOperation(value = "新增作品")
     @PostMapping("/save")
     public R<String> save(@RequestBody Works works){
         works.setSubTime(new Date());
@@ -46,6 +50,7 @@ public class WorksController {
     }
 
     //删除
+    @ApiOperation(value = "删除作品")
     @DeleteMapping("/delete")
     public R<String> delete(@RequestParam Integer id){
 
@@ -53,18 +58,22 @@ public class WorksController {
     }
 
     //修改
+    @ApiOperation(value = "修改作品")
     @PostMapping("/update")
     public R<String> update(@RequestBody Works works){
         return worksService.updateById(works)?R.success("修改成功"):R.error("修改失败");
     }
 
     //查询
+    @ApiOperation(value = "查询作品")
     @GetMapping("/getById")
     public R<Works> getById(@RequestParam Integer id){
 
         return R.success(worksService.getById(id));
     }
 
+    //分页查询
+    @ApiOperation(value = "分页查询")
     @PostMapping("/list")
     public R<Page> getOrderList(@RequestBody Works works,@RequestParam(value = "page") int page, @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "status") int status) {
         //分页查
@@ -79,6 +88,8 @@ public class WorksController {
         return R.success(paged);
     }
 
+    //导出作品
+    @ApiOperation(value = "导出作品表")
     @GetMapping("/export-data")
     public ResponseEntity<InputStreamResource> exportData(@RequestBody Works works,@RequestParam(value = "page") int page, @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "status") int status) throws IOException {
         // 假设这是从数据库分页查询得到的数据列表
@@ -99,7 +110,7 @@ public class WorksController {
         for (Works data : pageData) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(data.getSchool());
-            row.createCell(1).setCellValue(data.getGroup());
+            row.createCell(1).setCellValue(data.getWorkGroup());
             row.createCell(2).setCellValue(data.getWorkName());
             row.createCell(3).setCellValue(data.getUserName());
             row.createCell(4).setCellValue(data.getUserPhone());

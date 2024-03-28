@@ -1,4 +1,4 @@
-package com.example.demo.demos.web.service.Impl;
+package com.example.demo.demos.web.service.impl;
 
 import com.example.demo.demos.web.entity.Works;
 import com.example.demo.demos.web.mapper.WorksMapper;

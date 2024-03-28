@@ -1,6 +1,8 @@
 package com.example.demo.demos.web.entity;
 
 import java.util.Date;
+
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "作品实体类")
 public class Works {
  
        //作品id
        private Long id;
     
        //作品组别
-       private String group;
+       private String workGroup;
     
        //作品名称
        private String workName;
