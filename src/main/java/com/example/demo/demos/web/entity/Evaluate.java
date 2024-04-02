@@ -22,7 +22,6 @@ public class Evaluate {
     @ApiModelProperty(value = "评价id")
     private Long id;
 
-
     //评委名
     @NotBlank(message = "用户名不能为空")
     @ApiModelProperty(value = "评委名")
