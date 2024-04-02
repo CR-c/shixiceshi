@@ -4,17 +4,3 @@ mybatis:
 
 server:
   port: 8081
-
-spring:
-  application:
-    name: charge-bot
-#  cloud:
-#    nacos:
-#      server-addr: 47.115.213.55:8848
-#      discovery:
-#        cluster-name: DR
-#  redis:
-#    host: localhost
-#    password: abc789456
-#    database: 0
-#    port: 6379

@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,7 +50,7 @@ public class SysUserController {
 
     @ApiOperation(value = "新增用户",notes = "新增用户")
     @PostMapping("/save")
-    public R<String> save(@RequestBody SysUser sysUser){
+    public R<String> save(@Validated @RequestBody SysUser sysUser){
         boolean save = sysUserService.save(sysUser);
         if(save){
             return R.success("保存成功");
@@ -60,7 +61,7 @@ public class SysUserController {
     //删除SysUser
     @ApiOperation(value = "删除用户",notes = "删除用户")
     @DeleteMapping("/delete")
-    public R<String> delete(@RequestParam Integer id){
+    public R<String> delete(@Validated @RequestParam Integer id){
         boolean delete = sysUserService.removeById(id);
         if(delete){
             return R.success("删除成功");
@@ -71,7 +72,7 @@ public class SysUserController {
     //修改
     @ApiOperation(value = "修改用户",notes = "修改用户")
     @PostMapping("/update")
-    public R<String> update(@RequestBody SysUser sysUser){
+    public R<String> update(@Validated @RequestBody SysUser sysUser){
         boolean update = sysUserService.updateById(sysUser);
         if(update){
             return R.success("修改成功");
@@ -82,7 +83,7 @@ public class SysUserController {
     //查询
     @ApiOperation(value = "查询用户",notes = "查询用户")
     @PostMapping("/getById")
-    public R<SysUser> getById(@RequestParam Integer id){
+    public R<SysUser> getById(@Validated @RequestParam Integer id){
         SysUser sysUser = sysUserService.getById(id);
         if(sysUser != null){
             return R.success(sysUser);
@@ -93,8 +94,8 @@ public class SysUserController {
     //f分页查询
     @ApiOperation(value = "分页查询用户",notes = "分页查询用户")
 
-    @RequestMapping("/list")
-    public R<Page> getOrderList(@RequestBody SysUser sysUser, @RequestParam(value = "page") int page, @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "status") int status) {
+    @GetMapping("/list")
+    public R<Page> getOrderList(@Validated @RequestBody SysUser sysUser, @RequestParam(value = "page") int page, @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "status") int status) {
         //分页查
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(sysUser.getUserStatus()!=null, SysUser::getUserStatus, sysUser.getUserStatus());
